@@ -32,9 +32,20 @@ assert_gawk_installed() {
   fi
 }
 
+# get branch name
+get_branch_name() {
+  branch=$(git rev-parse --abbrev-ref HEAD)
+  echo $branch
+}
+
 # validate branch name
 assert_branch_name() {
-  
+  branch=$(get_branch_name)
+  # Fix this regex to use the env var
+  match=$(echo $branch | awk '{if ($1 ~ /sathish\//) {print}}')
+  if [[ -z $match ]]; then
+    echo "branch name shoud be ${GIT_BRANCH_PREFIX}/{ticketId}"
+  fi
 }
 
 # get ticket id from branch
@@ -55,6 +66,7 @@ jiracommit() {
   fi
 
   if [[ ! -z $1 ]]; then
+    assert_branch_name
     ticketId=$(get_ticket_id_from_branch)
     commitMsg=$ticketId-$1
     git diff --name-only --cached
