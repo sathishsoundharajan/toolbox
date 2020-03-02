@@ -7,6 +7,7 @@ export GIT_BRANCH_PREFIX=sathish
 assert_git_installed() {
   if ! command -v git 2>&1 >/dev/null; then
     echo "git required for work, please install git!"
+    return
   fi
 }
 
@@ -14,6 +15,7 @@ assert_git_installed() {
 assert_git_folder() {
   if [[ ! -d ".git" ]]; then
     echo "git is not initilized in this folder, run git init!"
+    return
   fi
 }
 
@@ -22,6 +24,7 @@ assert_jira_url() {
   match=$(echo $1 | awk '{if ($1 ~ /https:\/\/jira.samsungmtv.com\/browse/) {print}}')
   if [[ -z $match ]]; then
     echo "jira signature should be https://jira.samsungmtv.com/browse/{ticketId}"
+    return
   fi
 }
 
@@ -29,6 +32,7 @@ assert_jira_url() {
 assert_gawk_installed() {
   if ! command -v gawk 2>&1 >/dev/null; then
     echo "gawk is required to run the command!"
+    return
   fi
 }
 
