@@ -1,4 +1,5 @@
-#!/bin/bash -x
+#!/bin/bash
+
 
 ## ENV VARS REQUIRED FOR EXECUTION OF GIT UTILITIES
 export GIT_BRANCH_PREFIX=sathish
@@ -102,4 +103,4 @@ jirawork() {
       git checkout -b $GIT_BRANCH_PREFIX/$ticketId
     fi
   fi
-}
+} 
