@@ -7,7 +7,7 @@ export GIT_BRANCH_PREFIX=sathish
 # check git command is available
 assert_git_installed() {
   if ! command -v git 2>&1 >/dev/null; then
-    echo "git required for work, please install git!"
+    error "git required for work, please install git!"
     return
   fi
 }
@@ -15,7 +15,7 @@ assert_git_installed() {
 # check .git folder available ~ git initialized
 assert_git_folder() {
   if [[ ! -d ".git" ]]; then
-    echo "git is not initilized in this folder, run git init!"
+    error "git is not initilized in this folder, run git init!"
     return
   fi
 }
@@ -24,7 +24,7 @@ assert_git_folder() {
 assert_jira_url() {
   match=$(echo $1 | awk '{if ($1 ~ /https:\/\/jira.samsungmtv.com\/browse/) {print}}')
   if [[ -z $match ]]; then
-    echo "jira signature should be https://jira.samsungmtv.com/browse/{ticketId}"
+    error "jira signature should be https://jira.samsungmtv.com/browse/{ticketId}"
     return
   fi
 }
@@ -32,7 +32,7 @@ assert_jira_url() {
 # check gawk command is available
 assert_gawk_installed() {
   if ! command -v gawk 2>&1 >/dev/null; then
-    echo "gawk is required to run the command!"
+    error "gawk is required to run the command!"
     return
   fi
 }
@@ -49,7 +49,7 @@ assert_branch_name() {
   # Fix this regex to use the env var
   match=$(echo $branch | awk '{if ($1 ~ /sathish\//) {print}}')
   if [[ -z $match ]]; then
-    echo "branch name shoud be ${GIT_BRANCH_PREFIX}/{ticketId}"
+    info "branch name shoud be ${GIT_BRANCH_PREFIX}/{ticketId}"
   fi
 }
 
@@ -66,7 +66,7 @@ jiracommit() {
   assert_git_folder
 
   if [[ -z $1 ]]; then
-    echo "commit message is required, provide what is the fix or feature name!!"
+    error "commit message is required, provide what is the fix or feature name!!"
     return
   fi
 
@@ -75,7 +75,7 @@ jiracommit() {
     ticketId=$(get_ticket_id_from_branch)
     commitMsg=$ticketId-$1
     git diff --name-only --cached
-    echo "commit message: $commitMsg"
+    info "commit message: $commitMsg"
     git commit -n -m $commitMsg
   fi
 }
@@ -85,18 +85,18 @@ jiracommit() {
 # Example: https://jira.samsungmtv.com/browse/COM-31387
 jirawork() {
   if [[ -z $1 ]]; then
-    echo "Jira ticket url is required!!" 1>&2
+    error "Jira ticket url is required!!" 1>&2
   fi
 
   if [[ ! -z $1 ]]; then
-    echo "Creating a branch to work for" $1
+    info "Creating a branch to work for" $1
     assert_git_installed
     assert_git_folder
     assert_jira_url $1
     ticketId=$(echo $1 | awk '{split($0, url, "/"); print url[5]}')
 
     if [[ -z $ticketId ]]; then
-      echo "Unable to identify ticket id from" $ticketId
+      info "Unable to identify ticket id from" $ticketId
     fi
 
     if [[ ! -z $ticketId ]]; then
