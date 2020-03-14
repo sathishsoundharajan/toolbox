@@ -59,13 +59,19 @@ setup_toolbox() {
 	echo
 }
 
+append_toolbox_main() {
+	echo ${TOOLBOX}/main.sh > ~/.zshrc
+}
+
 main() {
 	setup_color
 	setup_toolbox
 
-	info "source main shell"
+	info "source main shell - $TOOLBOX/main.sh"
 	source $TOOLBOX/main.sh
 
+	mac_setup
+	append_toolbox_main
 	info "installation completed. Try toolbox"
 }
 

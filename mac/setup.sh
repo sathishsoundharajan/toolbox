@@ -17,8 +17,6 @@ mac_setup() {
 
   info "installed brew :: " $(brew --version)
 
-	brew tap caskroom/cask
-
   setup_iterm2_terminal
 	setup_vim
 }
