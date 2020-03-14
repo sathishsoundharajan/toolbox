@@ -60,7 +60,8 @@ setup_toolbox() {
 }
 
 append_toolbox_main() {
-	echo ${TOOLBOX}/main.sh >> ~/.zshrc
+	echo >> ~/.zshrc
+	echo source ${TOOLBOX}/main.sh >> ~/.zshrc
 }
 
 main() {
