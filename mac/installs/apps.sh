@@ -24,7 +24,7 @@ setup_iterm2_terminal() {
 
 		info "installing oh-my-zsh.."
 		rm -rf /Users/sathishkumar/.oh-my-zsh
-		sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh --unattended --skip-chsh)"
+		sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" --unattended --skip-chsh
 
 		## install tree
 		if ! command -v tree 2>&1 >/dev/null; then
@@ -46,7 +46,7 @@ setup_iterm2_terminal() {
 
 		info "moving ghostwheel zsh theme"
 		mkdir -p ~/.zsh-themes
-		cp ./mac/templates/ghostwheel.theme ~/.zsh-themes/ghostwheel.theme
+		cp  ~/.toolbox/mac/templates/ghostwheel.theme ~/.zsh-themes/ghostwheel.theme
 
 		info "applying zshrc template"
 		cat ~/.zsh-template/zshrc.zsh-template ./mac/templates/.zshrc >~/.zshrc
