@@ -62,6 +62,11 @@ setup_toolbox() {
 main() {
 	setup_color
 	setup_toolbox
+
+	info "source main shell"
+	source $TOOLBOX/main.sh
+
+	info "installation completed. Try toolbox"
 }
 
 main "$@"
